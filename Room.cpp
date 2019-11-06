@@ -4,6 +4,7 @@
 
 #include "Room.h"
 #include "wordwrap.h"
+#include "strings.h"
 #include <algorithm>
 
 /**
@@ -35,17 +36,16 @@ void Room::describe() const {
     wrapOut(this->description);
     wrapEndPara();
 
-    wrapOut(reinterpret_cast<const string *>("In the room there is: "));
+    //wrapOut(reinterpret_cast<const string *>("In the room there is: "));
     auto iter = items.begin();
-    if (this->items.size() == 0)
+    if (this->items.empty())
         return;
     else {
         for (int i = 0; i < items.size(); i++) {
             advance(iter, i);
             wrapOut(iter->getName());
-            wrapOut(reinterpret_cast<const string *>(", "));
         }
-    }
+    }// NEEEEEEEEDS WORK
 }
 /**
  * Statically creates a room and then adds it to the global list.
@@ -127,7 +127,7 @@ void Room::setWest(Room* _west) {
  * Gets list of items in room
  * @return
  */
-list<GameObject> Room::getItems() {
+list<GameObject> Room::getItems() const {
     return this->items;
 }
 
@@ -135,6 +135,7 @@ void Room::addItem(GameObject _item) {
     this->items.push_back(_item);
 }
 
+//NEEEEEEEDS WORK
 /*
 GameObject Room::removeItem(string _keyword) {
     auto iter = items.begin();

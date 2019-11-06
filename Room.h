@@ -10,7 +10,6 @@
 #include <forward_list>
 #include <list>
 #include "GameObject.h"
-
 using namespace std;
 
 /**
@@ -65,7 +64,7 @@ public:
     static Room* addRoom(const string* _name, const string* _desc);
     static Room* addRoom(Room* room);
 
-    list<GameObject> getItems();
+    list<GameObject> getItems() const;
     void addItem(GameObject _item);
     //GameObject removeItem(string _keyword);
 

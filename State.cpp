@@ -37,7 +37,7 @@ void State::goTo(const Room *target) {
  * Return a pointer to the current room.
  * @return Pointer to the current room.
  */
-const Room* State::getCurrentRoom() const {
+const Room* State::getCurrentRoom() {
     return this->currentRoom;
 }
 

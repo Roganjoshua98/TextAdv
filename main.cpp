@@ -36,12 +36,16 @@ void initRooms() {
     auto* r3 = new Room(&r3name, &r3desc);
     auto* r4 = new Room(&r4name, &r4desc);
     auto* r5 = new Room(&r5name, &r5desc);
+    auto* i1 = new GameObject(&i1name, &i1desc, &i1key);
+    auto* i2 = new GameObject(&i2name, &i2desc, &i2key);
     Room::addRoom(r1);
     Room::addRoom(r2);
     r1->configSouth(r2);
     r1->configEast(r3);
     r1->configWest(r4);
     r1->configNorth(r5);
+    r1->addItem(*i1);
+    r1->addItem(*i2);
 }
 
 /**
@@ -88,26 +92,37 @@ void gameLoop() {
 
         /* The first word of a command would normally be the verb. The first word is the text before the first
          * space, or if there is no space, the whole string. */
-        auto endOfVerb = static_cast<uint8_t>(commandBuffer.find(' '));
-
-        /* We could copy the verb to another string but there's no reason to, we'll just compare it in place. */
-        /* Command to go in direction */
-        if ((commandBuffer.compare(0,endOfVerb,"north") == 0) || (commandBuffer.compare(0,endOfVerb,"n") == 0)) {
-            commandOk = true; /* Confirm command has been handled */
-            /* See if there's an exit in specified direction */
-            goToRoom('n');
-        } else if ((commandBuffer.compare(0,endOfVerb,"south") == 0) || (commandBuffer.compare(0,endOfVerb,"s") == 0)) {
-            commandOk = true; /* Confirm command has been handled */
-            /* See if there's an exit in specified direction */
-            goToRoom('s');
-        } else if ((commandBuffer.compare(0,endOfVerb,"east") == 0) || (commandBuffer.compare(0,endOfVerb,"e") == 0)) {
-            commandOk = true; /* Confirm command has been handled */
-            /* See if there's an exit in specified direction */
-            goToRoom('e');
-        } else if ((commandBuffer.compare(0,endOfVerb,"west") == 0) || (commandBuffer.compare(0,endOfVerb,"w") == 0)) {
-            commandOk = true; /* Confirm command has been handled */
-            /* See if there's an exit in specified direction */
-            goToRoom('w');
+        auto endOfVerb = static_cast<uint8_t>(commandBuffer.find(' ')); //If single word, 255, else the index of the space
+        if (endOfVerb == 255) { //Single word input
+            /* We could copy the verb to another string but there's no reason to, we'll just compare it in place. */
+            /* Command to go in direction */
+            if ((commandBuffer.compare(0,endOfVerb,"north") == 0) || (commandBuffer.compare(0,endOfVerb,"n") == 0)) {
+                commandOk = true; /* Confirm command has been handled */
+                /* See if there's an exit in specified direction */
+                goToRoom('n');
+            } else if ((commandBuffer.compare(0,endOfVerb,"south") == 0) || (commandBuffer.compare(0,endOfVerb,"s") == 0)) {
+                commandOk = true;
+                goToRoom('s');
+            } else if ((commandBuffer.compare(0,endOfVerb,"east") == 0) || (commandBuffer.compare(0,endOfVerb,"e") == 0)) {
+                commandOk = true;
+                goToRoom('e');
+            } else if ((commandBuffer.compare(0,endOfVerb,"west") == 0) || (commandBuffer.compare(0,endOfVerb,"w") == 0)) {
+                commandOk = true;
+                goToRoom('w');
+            }
+        }
+        else {
+            if (commandBuffer.compare(0,endOfVerb,"get") == 0) {
+                auto roomItems = currentState->getCurrentRoom()->getItems();
+                auto iter = roomItems.begin();
+                for (int i = 0; i<roomItems.size(); i++) {
+                    advance(iter, i);
+                    const string* gotItem = iter->getKeyword();
+                    if (commandBuffer.compare(3,endOfVerb,gotItem) == 0) {
+                        cout << "YOU GOT THE ITEM" << endl;
+                    }
+                }
+            }
         }
 
         /* Quit command */

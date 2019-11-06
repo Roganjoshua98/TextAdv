@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/joshu/CLionProjects/textadv/Room.h
+C:/Users/joshu/CLionProjects/textadv/GameObject.h
 string
 -
 forward_list
@@ -14,9 +14,23 @@ forward_list
 list
 -
 
+C:/Users/joshu/CLionProjects/textadv/Room.h
+string
+-
+forward_list
+-
+list
+-
+GameObject.h
+C:/Users/joshu/CLionProjects/textadv/GameObject.h
+
 C:/Users/joshu/CLionProjects/textadv/State.h
 Room.h
 C:/Users/joshu/CLionProjects/textadv/Room.h
+forward_list
+-
+list
+-
 
 C:/Users/joshu/CLionProjects/textadv/main.cpp
 iostream
