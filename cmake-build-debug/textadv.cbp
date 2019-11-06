@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/joshu/CLionProjects/textadv/GameObject.cpp">
+			<Option target="textadv"/>
+		</Unit>
+		<Unit filename="C:/Users/joshu/CLionProjects/textadv/GameObject.h">
+			<Option target="textadv"/>
+		</Unit>
 		<Unit filename="C:/Users/joshu/CLionProjects/textadv/Room.cpp">
 			<Option target="textadv"/>
 		</Unit>

@@ -3,6 +3,9 @@
 //
 
 #include "State.h"
+#include <forward_list>
+#include <list>
+using namespace std;
 
 /**
  * Current state of the game.
@@ -36,4 +39,8 @@ void State::goTo(const Room *target) {
  */
 const Room* State::getCurrentRoom() const {
     return this->currentRoom;
+}
+
+list<GameObject> State::getInventory() {
+    return this->inventory;
 }

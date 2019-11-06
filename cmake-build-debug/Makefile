@@ -122,6 +122,33 @@ textadv/fast:
 	$(MAKE) -f CMakeFiles\textadv.dir\build.make CMakeFiles/textadv.dir/build
 .PHONY : textadv/fast
 
+GameObject.obj: GameObject.cpp.obj
+
+.PHONY : GameObject.obj
+
+# target to build an object file
+GameObject.cpp.obj:
+	$(MAKE) -f CMakeFiles\textadv.dir\build.make CMakeFiles/textadv.dir/GameObject.cpp.obj
+.PHONY : GameObject.cpp.obj
+
+GameObject.i: GameObject.cpp.i
+
+.PHONY : GameObject.i
+
+# target to preprocess a source file
+GameObject.cpp.i:
+	$(MAKE) -f CMakeFiles\textadv.dir\build.make CMakeFiles/textadv.dir/GameObject.cpp.i
+.PHONY : GameObject.cpp.i
+
+GameObject.s: GameObject.cpp.s
+
+.PHONY : GameObject.s
+
+# target to generate assembly for a file
+GameObject.cpp.s:
+	$(MAKE) -f CMakeFiles\textadv.dir\build.make CMakeFiles/textadv.dir/GameObject.cpp.s
+.PHONY : GameObject.cpp.s
+
 Room.obj: Room.cpp.obj
 
 .PHONY : Room.obj
@@ -239,6 +266,9 @@ help:
 	@echo ... textadv
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... GameObject.obj
+	@echo ... GameObject.i
+	@echo ... GameObject.s
 	@echo ... Room.obj
 	@echo ... Room.i
 	@echo ... Room.s

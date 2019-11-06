@@ -73,12 +73,12 @@ preinstall:
 CMakeFiles/textadv.dir/all:
 	$(MAKE) -f CMakeFiles\textadv.dir\build.make CMakeFiles/textadv.dir/depend
 	$(MAKE) -f CMakeFiles\textadv.dir\build.make CMakeFiles/textadv.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\joshu\CLionProjects\textadv\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target textadv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\joshu\CLionProjects\textadv\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6 "Built target textadv"
 .PHONY : CMakeFiles/textadv.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/textadv.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\joshu\CLionProjects\textadv\cmake-build-debug\CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\joshu\CLionProjects\textadv\cmake-build-debug\CMakeFiles 6
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/textadv.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\joshu\CLionProjects\textadv\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/textadv.dir/rule

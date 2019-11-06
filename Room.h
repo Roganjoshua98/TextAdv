@@ -9,8 +9,9 @@
 #include <string>
 #include <forward_list>
 #include <list>
+#include "GameObject.h"
 
-using std::string;
+using namespace std;
 
 /**
  * Represents a room (accessible location in the game).
@@ -27,6 +28,7 @@ class Room {
     /**
      * Pointer to room that is north, south, east or west of this one.
      */
+    list<GameObject> items;
     Room* north;
     Room* south;
     Room* east;
@@ -63,6 +65,10 @@ public:
     static Room* addRoom(const string* _name, const string* _desc);
     static Room* addRoom(Room* room);
 
+    list<GameObject> getItems();
+    void addItem(GameObject _item);
+    //GameObject removeItem(string _keyword);
+
     /**
      * Like setNorth, but it also does setSouth for the room north of it
      * @param _north
@@ -72,13 +78,10 @@ public:
     void configEast(Room *_east);
     void configWest(Room *_west);
 
-
     Room* getNorth() const;
     void setNorth(Room* _north);
-
     Room* getSouth() const;
     void setSouth(Room* _south);
-
     Room* getEast() const;
     void setEast(Room* _east);
 

@@ -9,6 +9,9 @@
 #include <string>
 using namespace std;
 
+/**
+ * ROOMS - Names and Descriptions
+ */
 const string r1name = "Centre Room";
 const string r1desc = "You are in the centre room. It's really quite boring, but then, it's just for testing really.";
 const string r2name = "South Room";
@@ -20,6 +23,13 @@ const string r4desc = "This is the west room. It's just there.";
 const string r5name = "North Room";
 const string r5desc = "The room at the north. Like the star, it is always there to guide you north";
 
+/**
+ * ITEMS - Item names, descriptions and keywords
+ */
+
+/**
+ * ERRORS - Error messages
+ */
 const string badExit = "You can't go that way.";
 const string badCommand = "I don't understand that.";
 

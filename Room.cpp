@@ -4,6 +4,7 @@
 
 #include "Room.h"
 #include "wordwrap.h"
+#include <algorithm>
 
 /**
  * Stores a static list of all rooms.
@@ -33,8 +34,19 @@ void Room::describe() const {
     wrapEndPara();
     wrapOut(this->description);
     wrapEndPara();
-}
 
+    wrapOut(reinterpret_cast<const string *>("In the room there is: "));
+    auto iter = items.begin();
+    if (this->items.size() == 0)
+        return;
+    else {
+        for (int i = 0; i < items.size(); i++) {
+            advance(iter, i);
+            wrapOut(iter->getName());
+            wrapOut(reinterpret_cast<const string *>(", "));
+        }
+    }
+}
 /**
  * Statically creates a room and then adds it to the global list.
  * @param _name Name for the new room.
@@ -64,17 +76,14 @@ void Room::configNorth(Room* _north) {
     setNorth(_north);
     _north->setSouth(this);
 }
-
 void Room::configSouth(Room* _south) {
     setSouth(_south);
     _south->setNorth(this);
 }
-
 void Room::configEast(Room* _east) {
     setEast(_east);
     _east->setWest(this);
 }
-
 void Room::configWest(Room* _west) {
     setWest(_west);
     _west->setEast(this);
@@ -87,15 +96,12 @@ void Room::configWest(Room* _west) {
 Room* Room::getNorth() const {
     return this->north;
 }
-
 Room* Room::getSouth() const {
     return this->south;
 }
-
 Room* Room::getEast() const {
     return this->east;
 }
-
 Room* Room::getWest() const {
     return this->west;
 }
@@ -107,15 +113,39 @@ Room* Room::getWest() const {
 void Room::setNorth(Room* _north) {
     this->north = _north;
 }
-
 void Room::setSouth(Room* _south) {
     this->south = _south;
 }
-
 void Room::setEast(Room* _east) {
     this->east = _east;
 }
-
 void Room::setWest(Room* _west) {
     this->west = _west;
 }
+
+/**
+ * Gets list of items in room
+ * @return
+ */
+list<GameObject> Room::getItems() {
+    return this->items;
+}
+
+void Room::addItem(GameObject _item) {
+    this->items.push_back(_item);
+}
+
+/*
+GameObject Room::removeItem(string _keyword) {
+    auto iter = items.begin();
+    for (int i = 0; i<items.size(); i++) {
+        advance(iter, i);
+        if (iter->getKeyword() == _keyword) {
+            GameObject item = *iter;
+            items.erase(iter);
+            return item;
+        }
+    }
+}*/
+
+

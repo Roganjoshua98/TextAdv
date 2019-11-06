@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/joshu/CLionProjects/textadv/GameObject.cpp" "C:/Users/joshu/CLionProjects/textadv/cmake-build-debug/CMakeFiles/textadv.dir/GameObject.cpp.obj"
   "C:/Users/joshu/CLionProjects/textadv/Room.cpp" "C:/Users/joshu/CLionProjects/textadv/cmake-build-debug/CMakeFiles/textadv.dir/Room.cpp.obj"
   "C:/Users/joshu/CLionProjects/textadv/State.cpp" "C:/Users/joshu/CLionProjects/textadv/cmake-build-debug/CMakeFiles/textadv.dir/State.cpp.obj"
   "C:/Users/joshu/CLionProjects/textadv/main.cpp" "C:/Users/joshu/CLionProjects/textadv/cmake-build-debug/CMakeFiles/textadv.dir/main.cpp.obj"

@@ -56,7 +56,7 @@ void initState() {
  * @param direction
  */
 void goToRoom(char direction) {
-    Room* destinationRoom;
+    Room *destinationRoom = nullptr;
     /* Determine which direction user inputted */
     if (direction == 'n')
         destinationRoom = currentState->getCurrentRoom()->getNorth();
@@ -64,7 +64,7 @@ void goToRoom(char direction) {
         destinationRoom = currentState->getCurrentRoom()->getSouth();
     else if (direction == 'e')
         destinationRoom = currentState->getCurrentRoom()->getEast();
-    else
+    else if (direction == 'w')
         destinationRoom = currentState->getCurrentRoom()->getWest();
 
     if (destinationRoom == nullptr) { /* there isn't */
@@ -79,8 +79,6 @@ void goToRoom(char direction) {
 /**
  * The main game loop.
  */
-
-//THIS IS JUST TO TEST
 void gameLoop() {
     bool gameOver=false;
     while (!gameOver) {
