@@ -45,6 +45,8 @@ vector
 -
 forward_list
 -
+strings.h
+-
 Room.h
 C:/Users/joshu/CLionProjects/textadv/Room.h
 wordwrap.h
@@ -53,10 +55,6 @@ State.h
 C:/Users/joshu/CLionProjects/textadv/State.h
 strings.h
 C:/Users/joshu/CLionProjects/textadv/strings.h
-
-C:/Users/joshu/CLionProjects/textadv/strings.h
-string
--
 
 C:/Users/joshu/CLionProjects/textadv/wordwrap.h
 string

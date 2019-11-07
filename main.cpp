@@ -5,6 +5,7 @@
 #include <iterator>
 #include <vector>
 #include <forward_list>
+#include <strings.h>
 #include "Room.h"
 #include "wordwrap.h"
 #include "State.h"
@@ -112,14 +113,20 @@ void gameLoop() {
             }
         }
         else {
+            /*
+             * GET command - Gets the item specified from the room, puts it in player inventory
+             */
             if (commandBuffer.compare(0,endOfVerb,"get") == 0) {
-                auto roomItems = currentState->getCurrentRoom()->getItems();
+                commandOk = true;
+                list<GameObject> roomItems = currentState->getCurrentRoom()->getItems();
                 auto iter = roomItems.begin();
                 for (int i = 0; i<roomItems.size(); i++) {
                     advance(iter, i);
-                    const string* gotItem = iter->getKeyword();
-                    if (commandBuffer.compare(3,endOfVerb,gotItem) == 0) {
-                        cout << "YOU GOT THE ITEM" << endl;
+                    const string* itemOnFloor = iter->getKeyword();
+                    string commandItem = commandBuffer.substr(endOfVerb+1);
+                    if (commandItem.compare(*itemOnFloor) == 0) {
+                        //INSERT CODE TO REMOVE ITEM FROM ROOM AND ADD TO INVENTORY
+                        break;
                     }
                 }
             }
