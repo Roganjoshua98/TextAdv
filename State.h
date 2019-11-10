@@ -20,6 +20,7 @@ public:
     void announceLoc() const;
     const Room* getCurrentRoom();
     list<GameObject> getInventory();
+    void addItem(GameObject item);
 };
 
 

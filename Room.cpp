@@ -6,6 +6,7 @@
 #include "wordwrap.h"
 #include "strings.h"
 #include <algorithm>
+#include <iostream>
 
 /**
  * Stores a static list of all rooms.
@@ -37,13 +38,22 @@ void Room::describe() const {
     wrapEndPara();
 
     //wrapOut(reinterpret_cast<const string *>("In the room there is: "));
+    cout << "In the room there is: " << endl;
     auto iter = items.begin();
     if (this->items.empty())
         return;
     else {
         for (int i = 0; i < items.size(); i++) {
-            advance(iter, i);
+            if (i == items.size()-1) {
+                cout << "and a ";
+                wrapOut(iter->getName());
+                cout << endl;
+                break;
+            }
+            cout << "a ";
             wrapOut(iter->getName());
+            cout << endl;
+            advance(iter, 1);
         }
     }// NEEEEEEEEDS WORK
 }
@@ -66,6 +76,7 @@ Room* Room::addRoom(const string* _name, const string *_desc) {
  */
 Room* Room::addRoom(Room* room) {
     Room::rooms.push_back(room);
+    return room;
 }
 
 /**
@@ -135,18 +146,16 @@ void Room::addItem(GameObject _item) {
     this->items.push_back(_item);
 }
 
-//NEEEEEEEDS WORK
-/*
 GameObject Room::removeItem(string _keyword) {
     auto iter = items.begin();
-    for (int i = 0; i<items.size(); i++) {
-        advance(iter, i);
-        if (iter->getKeyword() == _keyword) {
-            GameObject item = *iter;
-            items.erase(iter);
-            return item;
-        }
+    int i = 0;
+    while (!_keyword.compare(*iter->getKeyword())) {
+        advance(iter, 1);
     }
-}*/
+    GameObject item = *iter;
+    items.remove(*iter);
+    return item;
+}
+
 
 

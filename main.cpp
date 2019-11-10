@@ -39,6 +39,8 @@ void initRooms() {
     auto* r5 = new Room(&r5name, &r5desc);
     auto* i1 = new GameObject(&i1name, &i1desc, &i1key);
     auto* i2 = new GameObject(&i2name, &i2desc, &i2key);
+    auto* i3 = new GameObject(&i3name, &i3desc, &i3key);
+    auto* i4 = new GameObject(&i4name, &i4desc, &i4key);
     Room::addRoom(r1);
     Room::addRoom(r2);
     r1->configSouth(r2);
@@ -47,6 +49,8 @@ void initRooms() {
     r1->configNorth(r5);
     r1->addItem(*i1);
     r1->addItem(*i2);
+    r1->addItem(*i3);
+    r1->addItem(*i4);
 }
 
 /**
@@ -121,13 +125,14 @@ void gameLoop() {
                 list<GameObject> roomItems = currentState->getCurrentRoom()->getItems();
                 auto iter = roomItems.begin();
                 for (int i = 0; i<roomItems.size(); i++) {
-                    advance(iter, i);
                     const string* itemOnFloor = iter->getKeyword();
                     string commandItem = commandBuffer.substr(endOfVerb+1);
-                    if (commandItem.compare(*itemOnFloor) == 0) {
-                        //INSERT CODE TO REMOVE ITEM FROM ROOM AND ADD TO INVENTORY
+                    if (commandItem == *itemOnFloor)  {
+                        cout << "YOU GOT IT BRUH" << endl;
+                        GameObject gotItem = currentState->getCurrentRoom()->removeItem(commandItem);
                         break;
                     }
+                    advance(iter, 1);
                 }
             }
         }

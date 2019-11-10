@@ -44,3 +44,7 @@ const Room* State::getCurrentRoom() {
 list<GameObject> State::getInventory() {
     return this->inventory;
 }
+
+void State::addItem(GameObject item) {
+
+}

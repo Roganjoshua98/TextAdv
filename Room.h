@@ -66,7 +66,7 @@ public:
 
     list<GameObject> getItems() const;
     void addItem(GameObject _item);
-    //GameObject removeItem(string _keyword);
+    GameObject removeItem(string _keyword);
 
     /**
      * Like setNorth, but it also does setSouth for the room north of it
