@@ -49,7 +49,7 @@ public:
      * Outputs the name and description of the room
      * in standard format.
      */
-    void describe() const;
+    void describe();
 
     /**
      * List storing all rooms that have been registered via addRoom().
@@ -65,7 +65,7 @@ public:
     static Room* addRoom(Room* room);
 
     list<GameObject> getItems() const;
-    void addItem(GameObject _item);
+    void addItem(GameObject* _item);
     GameObject removeItem(string _keyword);
 
     /**

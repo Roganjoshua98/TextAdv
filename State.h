@@ -12,15 +12,16 @@
 using namespace std;
 
 class State {
-    const Room* currentRoom;
+    Room* currentRoom;
     list<GameObject> inventory;
 public:
-    explicit State(const Room *startRoom);
-    void goTo(const Room *target);
+    explicit State(Room *startRoom);
+    void goTo(Room *target);
     void announceLoc() const;
-    const Room* getCurrentRoom();
+    Room* getCurrentRoom();
     list<GameObject> getInventory();
     void addItem(GameObject item);
+    GameObject removeItem(string _keyword);
 };
 
 

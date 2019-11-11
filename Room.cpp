@@ -31,28 +31,26 @@ Room::~Room() {
 /**
  * Prints the description of a room (the name and long description)
  */
-void Room::describe() const {
+void Room::describe() {
     wrapOut(this->name);
     wrapEndPara();
     wrapOut(this->description);
     wrapEndPara();
 
     //wrapOut(reinterpret_cast<const string *>("In the room there is: "));
-    cout << "In the room there is: " << endl;
     auto iter = items.begin();
     if (this->items.empty())
         return;
     else {
+        cout << "In the room there is: " << endl;
         for (int i = 0; i < items.size(); i++) {
             if (i == items.size()-1) {
                 cout << "and a ";
-                wrapOut(iter->getName());
-                cout << endl;
+                cout << iter->getName() << endl;
                 break;
             }
             cout << "a ";
-            wrapOut(iter->getName());
-            cout << endl;
+            cout << iter->getName() << endl;
             advance(iter, 1);
         }
     }// NEEEEEEEEDS WORK
@@ -142,18 +140,18 @@ list<GameObject> Room::getItems() const {
     return this->items;
 }
 
-void Room::addItem(GameObject _item) {
-    this->items.push_back(_item);
+void Room::addItem(GameObject* _item) {
+    this->items.push_back(*_item);
 }
+
 
 GameObject Room::removeItem(string _keyword) {
     auto iter = items.begin();
-    int i = 0;
-    while (!_keyword.compare(*iter->getKeyword())) {
+    while (!_keyword.compare(iter->getKeyword()) == 0) {
         advance(iter, 1);
     }
     GameObject item = *iter;
-    items.remove(*iter);
+    this->items.erase(iter);
     return item;
 }
 

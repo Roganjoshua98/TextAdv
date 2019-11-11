@@ -13,17 +13,19 @@ using namespace std;
 
 class GameObject {
     /* Short name for object */
-    const string* name;
+    string name;
     /* Long description of object */
-    const string* description;
+    string description;
     /* Keyword for user to refer to object in commands */
-    const string* keyword;
+    string keyword;
 public:
     /* Constructor and desctructor */
-    GameObject(const string* _name, const string* _description, const string* _keyword);
+    GameObject(string _name, string _description, string _keyword);
     ~GameObject();
-
-    const string * getName() const;
-    const string* getDescription() const;
-    const string* getKeyword() const;
+    /* Static list of all gameObjects initiated */
+    static list<GameObject*> gameObjects;
+    //static GameObject* addObject(GameObject* room);
+    string getName();
+    string getDescription();
+    string getKeyword();
 };

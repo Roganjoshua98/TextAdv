@@ -5,17 +5,25 @@
 #include "wordwrap.h"
 using namespace std;
 
-GameObject::GameObject(const string* _name, const string* _description, const string* _keyword) :
+GameObject::GameObject(string _name, string _description, string _keyword) :
     name(_name), description(_description), keyword(_keyword){}
 
-const string * GameObject::getName() const {
+string GameObject::getName() {
     return this->name;
 }
-const string *GameObject::getDescription() const {
+string GameObject::getDescription() {
     return this->description;
 }
-const string* GameObject::getKeyword() const {
+string GameObject::getKeyword() {
     return this->keyword;
-};
+}
+
+/*
+ GameObject* GameObject::addObject(GameObject *object) {
+    gameObjects.push_back(object);
+    return object;
+};*/
+
+GameObject::
 
 GameObject::~GameObject() = default;

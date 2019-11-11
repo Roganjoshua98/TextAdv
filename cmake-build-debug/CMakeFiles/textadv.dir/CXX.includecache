@@ -14,18 +14,6 @@ forward_list
 list
 -
 
-C:/Users/joshu/CLionProjects/textadv/Room.cpp
-Room.h
-C:/Users/joshu/CLionProjects/textadv/Room.h
-wordwrap.h
-C:/Users/joshu/CLionProjects/textadv/wordwrap.h
-strings.h
-C:/Users/joshu/CLionProjects/textadv/strings.h
-algorithm
--
-iostream
--
-
 C:/Users/joshu/CLionProjects/textadv/Room.h
 string
 -
@@ -35,14 +23,6 @@ list
 -
 GameObject.h
 C:/Users/joshu/CLionProjects/textadv/GameObject.h
-
-C:/Users/joshu/CLionProjects/textadv/State.cpp
-State.h
-C:/Users/joshu/CLionProjects/textadv/State.h
-forward_list
--
-list
--
 
 C:/Users/joshu/CLionProjects/textadv/State.h
 Room.h
@@ -75,10 +55,6 @@ State.h
 C:/Users/joshu/CLionProjects/textadv/State.h
 strings.h
 C:/Users/joshu/CLionProjects/textadv/strings.h
-
-C:/Users/joshu/CLionProjects/textadv/strings.h
-string
--
 
 C:/Users/joshu/CLionProjects/textadv/wordwrap.h
 string
