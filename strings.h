@@ -27,7 +27,7 @@ const string r5desc = "The room at the north. Like the star, it is always there 
  * ITEMS - Item names, descriptions and keywords
  */
 const string i1name = "Rusty Sword";
-const string i1desc = "This sword is so rusty the only hope you could have of damaging someone with it is if they forgot to have their tetanus shot.";
+const string i1desc = "The only hope you could have of damaging someone with it is if they forgot their tetanus shot.";
 const string i1key = "sword";
 const string i2name = "Will to Live";
 const string i2desc = "Behold ye, all who stand. For here lies my will to live, rotting slowly on the floor";

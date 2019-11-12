@@ -97,6 +97,7 @@ void gameLoop() {
     while (!gameOver) {
         /* Ask for a command. */
         bool commandOk = false;
+        bool commandDone = false;
         inputCommand(&commandBuffer);
 
         /* The first word of a command would normally be the verb. The first word is the text before the first
@@ -162,27 +163,53 @@ void gameLoop() {
                     if (commandItem == itemOnFloor) {
                         currentState->addItem(currentState->getCurrentRoom()->removeItem(commandItem));
                         cout << "You picked up the item!" << endl;
+                        commandDone = true;
                         break;
                     }
                     advance(iter, 1);
                 }
+                if (!commandDone)
+                    cout << "You search the room, but that item is nowhere to be found" << endl;
             }
-                /*
-                 * DROP command - Drops specified item from inventory onto room floor
-                 */
+            /*
+             * DROP command - Drops specified item from inventory onto room floor
+             */
             else if (commandBuffer.compare(0, endOfVerb, "drop") == 0) {
                 commandOk = true;
                 list<GameObject> inventory = currentState->getInventory();
                 auto iter = inventory.begin();
+                string commandItem = commandBuffer.substr(endOfVerb + 1);
                 for (int i = 0; i < inventory.size(); i++) {
-                    string commandItem = commandBuffer.substr(endOfVerb + 1);
                     if (commandItem == iter->getKeyword()) {
                         currentState->getCurrentRoom()->addItem(currentState->removeItem(commandItem));
                         cout << "You dropped the item" << endl;
+                        commandDone  = true;
                         break;
                     }
                     advance(iter, 1);
                 }
+                if (!commandDone)
+                    cout << "The item you are looking for is not in your inventory" << endl;
+            }
+            /*
+             * EXAMINE command - Brings the long description of a specified object
+             */
+            else if (commandBuffer.compare(0, endOfVerb, "examine") == 0) {
+                commandOk = true;
+                list<GameObject> roomItems = currentState->getCurrentRoom()->getItems();
+                auto iter = roomItems.begin();
+                for (int i = 0; i < roomItems.size(); i++) {
+                    string itemOnFloor = iter->getKeyword();
+                    string commandItem = commandBuffer.substr(endOfVerb + 1);
+                    if (commandItem == itemOnFloor) {
+                        cout << iter->getDescription() << endl;
+                        commandDone = true;
+                        break;
+                    }
+                    advance(iter, 1);
+                }
+                if (!commandDone)
+                    cout << "You try to imagine what the item might look like, since it is nowhere to be found" << endl;
             }
         }
 
