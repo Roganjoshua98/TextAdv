@@ -65,7 +65,7 @@ public:
     static Room* addRoom(Room* room);
 
     list<GameObject> getItems() const;
-    void addItem(GameObject* _item);
+    void addItem(GameObject _item);
     GameObject removeItem(string _keyword);
 
     /**

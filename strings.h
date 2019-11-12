@@ -33,10 +33,10 @@ const string i2name = "Will to Live";
 const string i2desc = "Behold ye, all who stand. For here lies my will to live, rotting slowly on the floor";
 const string i2key = "endme";
 const string i3name = "Copy of Super Smash Bros Ultimate for Nintendo Switch";
-const string i3desc = "The best game of the series, obviously";
+const string i3desc = "The best game in the series, obviously";
 const string i3key = "smash";
-const string i4name = "C r u s t y Pot of Vaseline";
-const string i4desc = "A pot of vaseline which is old and crusted over. Throw it away you dirty human";
+const string i4name = "Empty Pot of Vaseline";
+const string i4desc = "A pot of vaseline which is old and empty. Throw it away you dirty human";
 const string i4key = "pot";
 /**
  * ERRORS - Error messages

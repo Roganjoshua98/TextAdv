@@ -49,20 +49,13 @@ list<GameObject> State::getInventory() {
 void State::addItem(GameObject _item) {
     this->inventory.push_back(_item);
 }
-/*
-GameObject State::removeItem(string _keyword) {
-    auto iter = this->inventory.begin();
-    while (!_keyword.compare(iter->getKeyword()))
-        advance(iter, 1);
-    GameObject item = *iter;
-    this->inventory.remove(*iter);
-    return item;
-}*/
 
 GameObject State::removeItem(string _keyword) {
-    for (GameObject g : inventory) {
-        if (g.getKeyword() == _keyword) {
-            GameObject testing = g;
-        }
+    auto iter = inventory.begin();
+    while (!_keyword.compare(iter->getKeyword()) == 0) {
+        advance(iter, 1);
     }
+    GameObject item = *iter;
+    this->inventory.erase(iter);
+    return item;
 }

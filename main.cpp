@@ -47,8 +47,8 @@ void initRooms() {
     r1->configEast(r3);
     r1->configWest(r4);
     r1->configNorth(r5);
-    r1->addItem(i1);
-    r1->addItem(i2);
+    r1->addItem(*i1);
+    r1->addItem(*i2);
 }
 
 /**
@@ -105,17 +105,17 @@ void gameLoop() {
         if (endOfVerb == 255) { //Single word input
             /* We could copy the verb to another string but there's no reason to, we'll just compare it in place. */
             /* INVENTORY command */
-            /*
             if (commandBuffer.compare(0,endOfVerb,"inventory") == 0) {
                 commandOk = true;
-                auto iter = currentState->getInventory().begin();
                 if (currentState->getInventory().empty()) {
                     cout << "You have no items in your inventory" << endl;
                     break;
                 } else {
+                    list<GameObject> inventory = currentState->getInventory();
+                    auto iter = inventory.begin();
                     cout << "In your bag you have: " << endl;
-                    for (int i = 0; i < currentState->getInventory().size(); i++) {
-                        if (i == currentState->getInventory().size() - 1) {
+                    for (int i = 0; i < inventory.size(); i++) {
+                        if (i == inventory.size()-1 && i != 0) {
                             cout << "and a ";
                             cout << iter->getName() << endl;
                             break;
@@ -126,7 +126,7 @@ void gameLoop() {
                     }
                 }
 
-            }*/
+            }
             /* Command to go in direction */
             if ((commandBuffer.compare(0,endOfVerb,"north") == 0) || (commandBuffer.compare(0,endOfVerb,"n") == 0)) {
                 commandOk = true; /* Confirm command has been handled */
@@ -142,38 +142,48 @@ void gameLoop() {
                 commandOk = true;
                 goToRoom('w');
             }
+
+            /* Quit command */
+            else if ((commandBuffer.compare(0, endOfVerb, "quit") == 0)) {
+                commandOk = true;
+                gameOver = true;
+            }
         } else {
             /*
              * GET command - Gets the item specified from the room, puts it in player inventory
              */
-            if (commandBuffer.compare(0,endOfVerb,"get") == 0) {
+            if (commandBuffer.compare(0, endOfVerb, "get") == 0) {
                 commandOk = true;
                 list<GameObject> roomItems = currentState->getCurrentRoom()->getItems();
                 auto iter = roomItems.begin();
-                for (int i = 0; i<roomItems.size(); i++) {
+                for (int i = 0; i < roomItems.size(); i++) {
                     string itemOnFloor = iter->getKeyword();
-                    string commandItem = commandBuffer.substr(endOfVerb+1);
-                    if (commandItem == itemOnFloor)  {
-                        cout << "YOU GOT IT BRUH" << endl;
-                        GameObject gotItem = currentState->getCurrentRoom()->removeItem(commandItem);
-                        currentState->addItem(gotItem);
+                    string commandItem = commandBuffer.substr(endOfVerb + 1);
+                    if (commandItem == itemOnFloor) {
+                        currentState->addItem(currentState->getCurrentRoom()->removeItem(commandItem));
+                        cout << "You picked up the item!" << endl;
                         break;
                     }
                     advance(iter, 1);
                 }
             }
-            else if (commandBuffer.compare(0,endOfVerb,"drop") == 0) {
+                /*
+                 * DROP command - Drops specified item from inventory onto room floor
+                 */
+            else if (commandBuffer.compare(0, endOfVerb, "drop") == 0) {
                 commandOk = true;
-                cout << "DROP IT" << endl;
-                GameObject testing = currentState->removeItem("pot");
-                cout << testing.getName() << endl;
+                list<GameObject> inventory = currentState->getInventory();
+                auto iter = inventory.begin();
+                for (int i = 0; i < inventory.size(); i++) {
+                    string commandItem = commandBuffer.substr(endOfVerb + 1);
+                    if (commandItem == iter->getKeyword()) {
+                        currentState->getCurrentRoom()->addItem(currentState->removeItem(commandItem));
+                        cout << "You dropped the item" << endl;
+                        break;
+                    }
+                    advance(iter, 1);
+                }
             }
-        }
-
-        /* Quit command */
-        if ((commandBuffer.compare(0,endOfVerb,"quit") == 0)) {
-            commandOk = true;
-            gameOver = true;
         }
 
         /* If commandOk hasn't been set, command wasn't understood, display error message */

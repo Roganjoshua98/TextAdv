@@ -44,7 +44,7 @@ void Room::describe() {
     else {
         cout << "In the room there is: " << endl;
         for (int i = 0; i < items.size(); i++) {
-            if (i == items.size()-1) {
+            if (i == items.size()-1 && i != 0) {
                 cout << "and a ";
                 cout << iter->getName() << endl;
                 break;
@@ -140,8 +140,8 @@ list<GameObject> Room::getItems() const {
     return this->items;
 }
 
-void Room::addItem(GameObject* _item) {
-    this->items.push_back(*_item);
+void Room::addItem(GameObject _item) {
+    this->items.push_back(_item);
 }
 
 
