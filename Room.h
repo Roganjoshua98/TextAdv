@@ -9,6 +9,7 @@
 #include <string>
 #include <forward_list>
 #include <list>
+#include <vector>
 #include "GameObject.h"
 using namespace std;
 
@@ -27,7 +28,7 @@ class Room {
     /**
      * Pointer to room that is north, south, east or west of this one.
      */
-    list<GameObject> items;
+    vector<GameObject*> items;
     Room* north;
     Room* south;
     Room* east;
@@ -64,9 +65,9 @@ public:
     static Room* addRoom(const string* _name, const string* _desc);
     static Room* addRoom(Room* room);
 
-    list<GameObject> getItems() const;
-    void addItem(GameObject _item);
-    GameObject removeItem(string _keyword);
+    vector<GameObject*> getItems() const;
+    void addItem(GameObject* item);
+    GameObject* removeItem(int index);
 
     /**
      * Like setNorth, but it also does setSouth for the room north of it

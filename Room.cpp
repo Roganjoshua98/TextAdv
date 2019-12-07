@@ -7,6 +7,7 @@
 #include "strings.h"
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 /**
  * Stores a static list of all rooms.
@@ -46,11 +47,11 @@ void Room::describe() {
         for (int i = 0; i < items.size(); i++) {
             if (i == items.size()-1 && i != 0) {
                 cout << "and a ";
-                cout << iter->getName() << endl;
+                cout << (*iter)->getName() << endl;
                 break;
             }
             cout << "a ";
-            cout << iter->getName() << endl;
+            cout << (*iter)->getName() << endl;
             advance(iter, 1);
         }
     }// NEEEEEEEEDS WORK
@@ -136,22 +137,17 @@ void Room::setWest(Room* _west) {
  * Gets list of items in room
  * @return
  */
-list<GameObject> Room::getItems() const {
+vector<GameObject*> Room::getItems() const {
     return this->items;
 }
 
-void Room::addItem(GameObject _item) {
+void Room::addItem(GameObject* _item) {
     this->items.push_back(_item);
 }
 
-
-GameObject Room::removeItem(string _keyword) {
-    auto iter = items.begin();
-    while (!_keyword.compare(iter->getKeyword()) == 0) {
-        advance(iter, 1);
-    }
-    GameObject item = *iter;
-    this->items.erase(iter);
+GameObject* Room::removeItem(int index) {
+    GameObject* item = items.at(index);
+    this->items.erase(items.begin() + index);
     return item;
 }
 

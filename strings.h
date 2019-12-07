@@ -13,15 +13,15 @@ using namespace std;
  * ROOMS - Names and Descriptions
  */
 const string r1name = "Centre Room";
-const string r1desc = "You are in the centre room. It's really quite boring, but then, it's just for testing really.";
+const string r1desc = "You are in the centre room. It's really quite boring. But then again, it's just for testing really.";
 const string r2name = "South Room";
-const string r2desc = "You are in the south room. You know because you walked south to get here. That's about all though.";
+const string r2desc = "You are in the south room. You know because you walked south to get here.";
 const string r3name = "East Room";
 const string r3desc = "The east room indeed exists. Alas, there are no beasts here.";
 const string r4name = "The West Room";
-const string r4desc = "This is the west room. It's just there.";
+const string r4desc = "This is the west room. Some say it's the best.";
 const string r5name = "North Room";
-const string r5desc = "The room at the north. Like the star, it is always there to guide you north";
+const string r5desc = "The room at the north. Just like the star, it is always there to guide you north";
 
 /**
  * ITEMS - Item names, descriptions and keywords

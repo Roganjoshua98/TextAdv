@@ -3,9 +3,7 @@
 //
 
 #include "State.h"
-#include <forward_list>
 #include <list>
-#include <iostream>
 using namespace std;
 
 /**
@@ -13,7 +11,8 @@ using namespace std;
  */
 
 /**
- * Display the description of the room the player is in. */
+ * Display the description of the room the player is in.
+ * */
 
 void State::announceLoc() const {
     this->currentRoom->describe();
@@ -42,20 +41,16 @@ Room* State::getCurrentRoom() {
     return this->currentRoom;
 }
 
-list<GameObject> State::getInventory() {
+vector<GameObject*> State::getInventory() {
     return this->inventory;
 }
 
-void State::addItem(GameObject _item) {
+void State::addItem(GameObject* _item) {
     this->inventory.push_back(_item);
 }
 
-GameObject State::removeItem(string _keyword) {
-    auto iter = inventory.begin();
-    while (!_keyword.compare(iter->getKeyword()) == 0) {
-        advance(iter, 1);
-    }
-    GameObject item = *iter;
-    this->inventory.erase(iter);
+GameObject* State::removeItem(int index) {
+    GameObject* item = inventory.at(index);
+    this->inventory.erase(inventory.begin() + index);
     return item;
 }

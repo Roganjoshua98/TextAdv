@@ -15,6 +15,7 @@
 using std::string;
 using std::unique_ptr;
 
+int maxSize = 255;  //The maximum size of any list of items. Important for functions.
 string commandBuffer;
 State *currentState;
 
@@ -32,23 +33,19 @@ void inputCommand(string *buffer) {
  * Sets up the map.
  */
 void initRooms() {
-    auto* r1 = new Room(&r1name, &r1desc);
-    Room::addRoom(r1);
-    auto* r2 = new Room(&r2name, &r2desc);
-    Room::addRoom(r2);
-    auto* r3 = new Room(&r3name, &r3desc);
-    auto* r4 = new Room(&r4name, &r4desc);
-    auto* r5 = new Room(&r5name, &r5desc);
-    auto* i1 = new GameObject(i1name, i1desc, i1key);
-    //GameObject::addObject(i1);
-    auto* i2 = new GameObject(i2name, i2desc, i2key);
-    //GameObject::addObject(i2);
+    auto* r1 = Room::addRoom(&r1name, &r1desc);
+    auto* r2 = Room::addRoom(&r2name, &r2desc);
+    auto* r3 = Room::addRoom(&r3name, &r3desc);
+    auto* r4 = Room::addRoom(&r4name, &r4desc);
+    auto* r5 = Room::addRoom(&r5name, &r5desc);
+    auto* i1 = GameObject::addItem(i1name, i1desc, i1key);
+    auto* i2 = GameObject::addItem(i2name, i2desc, i2key);
     r1->configSouth(r2);
     r1->configEast(r3);
     r1->configWest(r4);
     r1->configNorth(r5);
-    r1->addItem(*i1);
-    r1->addItem(*i2);
+    r1->addItem(i1);
+    r1->addItem(i2);
 }
 
 /**
@@ -56,12 +53,10 @@ void initRooms() {
  */
 void initState() {
     currentState = new State(Room::rooms.front());
-    auto* i3 = new GameObject(i3name, i3desc, i3key);
-    //GameObject::addObject(i3);
-    auto* i4 = new GameObject(i4name, i4desc, i4key);
-    //GameObject::addObject(i4);
-    currentState->addItem(*i3);
-    currentState->addItem(*i4);
+    auto* i3 = GameObject::addItem(i3name, i3desc, i3key);
+    auto* i4 = GameObject::addItem(i4name, i4desc, i4key);
+    currentState->addItem(i3);
+    currentState->addItem(i4);
 }
 
 /**
@@ -88,6 +83,47 @@ void goToRoom(char direction) {
     }
 }
 
+int checkItem(vector<GameObject *> items, string searchItem) {
+    auto iter = items.begin();
+    for (int i = 0; i < items.size(); i++) {
+        if (searchItem == (*iter)->getKeyword())
+            return i;
+        advance(iter, 1);
+    }
+    return maxSize;
+}
+
+bool get(string searchItem) {
+    vector<GameObject*> roomItems = currentState->getCurrentRoom()->getItems();
+    int index = checkItem(roomItems, searchItem);
+    if (index != maxSize) {
+        currentState->addItem(currentState->getCurrentRoom()->removeItem(index));
+        cout << "You picked up the " << roomItems.at(index)->getName() << endl;
+        return true;
+    }
+    return false;
+}
+
+bool drop(string searchItem) {
+    vector<GameObject*> inventory = currentState->getInventory();
+    int index = checkItem(inventory, searchItem);
+    if (index != maxSize) {
+        currentState->getCurrentRoom()->addItem(currentState->removeItem(index));
+        cout << "You dropped the " << inventory.at(index)->getName() << endl;
+        return true;
+    }
+    return false;
+}
+
+bool examine(string searchItem) {
+    vector<GameObject*> roomItems = currentState->getCurrentRoom()->getItems();
+    int index = checkItem(roomItems, searchItem);
+    if (index != maxSize) {
+        cout << (roomItems.at(index))->getDescription() << endl;
+        return true;
+    }
+    return false;
+}
 
 /**
  * The main game loop.
@@ -97,7 +133,6 @@ void gameLoop() {
     while (!gameOver) {
         /* Ask for a command. */
         bool commandOk = false;
-        bool commandDone = false;
         inputCommand(&commandBuffer);
 
         /* The first word of a command would normally be the verb. The first word is the text before the first
@@ -108,26 +143,31 @@ void gameLoop() {
             /* INVENTORY command */
             if (commandBuffer.compare(0,endOfVerb,"inventory") == 0) {
                 commandOk = true;
-                if (currentState->getInventory().empty()) {
+                if (currentState->getInventory().empty())
                     cout << "You have no items in your inventory" << endl;
-                    break;
-                } else {
-                    list<GameObject> inventory = currentState->getInventory();
+                else {
+                    vector<GameObject*> inventory = currentState->getInventory();
                     auto iter = inventory.begin();
                     cout << "In your bag you have: " << endl;
                     for (int i = 0; i < inventory.size(); i++) {
                         if (i == inventory.size()-1 && i != 0) {
                             cout << "and a ";
-                            cout << iter->getName() << endl;
+                            cout << (*iter)->getName() << endl;
                             break;
                         }
                         cout << "a ";
-                        cout << iter->getName() << endl;
+                        cout << (*iter)->getName() << endl;
                         advance(iter, 1);
                     }
                 }
-
             }
+
+            /* DESCRIBE command - Describes the room again */
+            else if (commandBuffer.compare(0,endOfVerb,"describe") == 0) {
+                commandOk = true;
+                currentState->getCurrentRoom()->describe();
+            }
+
             /* Command to go in direction */
             if ((commandBuffer.compare(0,endOfVerb,"north") == 0) || (commandBuffer.compare(0,endOfVerb,"n") == 0)) {
                 commandOk = true; /* Confirm command has been handled */
@@ -150,25 +190,13 @@ void gameLoop() {
                 gameOver = true;
             }
         } else {
+            string searchItem = commandBuffer.substr(endOfVerb + 1);    //Item that player wants action to be done on
             /*
              * GET command - Gets the item specified from the room, puts it in player inventory
              */
             if (commandBuffer.compare(0, endOfVerb, "get") == 0) {
                 commandOk = true;
-                list<GameObject> roomItems = currentState->getCurrentRoom()->getItems();
-                auto iter = roomItems.begin();
-                for (int i = 0; i < roomItems.size(); i++) {
-                    string itemOnFloor = iter->getKeyword();
-                    string commandItem = commandBuffer.substr(endOfVerb + 1);
-                    if (commandItem == itemOnFloor) {
-                        currentState->addItem(currentState->getCurrentRoom()->removeItem(commandItem));
-                        cout << "You picked up the item!" << endl;
-                        commandDone = true;
-                        break;
-                    }
-                    advance(iter, 1);
-                }
-                if (!commandDone)
+                if (!get(searchItem))
                     cout << "You search the room, but that item is nowhere to be found" << endl;
             }
             /*
@@ -176,19 +204,7 @@ void gameLoop() {
              */
             else if (commandBuffer.compare(0, endOfVerb, "drop") == 0) {
                 commandOk = true;
-                list<GameObject> inventory = currentState->getInventory();
-                auto iter = inventory.begin();
-                string commandItem = commandBuffer.substr(endOfVerb + 1);
-                for (int i = 0; i < inventory.size(); i++) {
-                    if (commandItem == iter->getKeyword()) {
-                        currentState->getCurrentRoom()->addItem(currentState->removeItem(commandItem));
-                        cout << "You dropped the item" << endl;
-                        commandDone  = true;
-                        break;
-                    }
-                    advance(iter, 1);
-                }
-                if (!commandDone)
+                if (!drop(searchItem))
                     cout << "The item you are looking for is not in your inventory" << endl;
             }
             /*
@@ -196,30 +212,19 @@ void gameLoop() {
              */
             else if (commandBuffer.compare(0, endOfVerb, "examine") == 0) {
                 commandOk = true;
-                list<GameObject> roomItems = currentState->getCurrentRoom()->getItems();
-                auto iter = roomItems.begin();
-                for (int i = 0; i < roomItems.size(); i++) {
-                    string itemOnFloor = iter->getKeyword();
-                    string commandItem = commandBuffer.substr(endOfVerb + 1);
-                    if (commandItem == itemOnFloor) {
-                        cout << iter->getDescription() << endl;
-                        commandDone = true;
-                        break;
-                    }
-                    advance(iter, 1);
-                }
-                if (!commandDone)
+                if (!examine(searchItem))
                     cout << "You try to imagine what the item might look like, since it is nowhere to be found" << endl;
             }
         }
 
         /* If commandOk hasn't been set, command wasn't understood, display error message */
-        if(!commandOk) {
+        if (!commandOk) {
             wrapOut(&badCommand);
             wrapEndPara();
         }
     }
 }
+
 
 
 int main() {

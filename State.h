@@ -7,21 +7,19 @@
 
 
 #include "Room.h"
-#include <forward_list>
-#include <list>
 using namespace std;
 
 class State {
     Room* currentRoom;
-    list<GameObject> inventory;
+    vector<GameObject*> inventory;
 public:
     explicit State(Room *startRoom);
     void goTo(Room *target);
     void announceLoc() const;
     Room* getCurrentRoom();
-    list<GameObject> getInventory();
-    void addItem(GameObject item);
-    GameObject removeItem(string _keyword);
+    vector<GameObject*> getInventory();
+    void addItem(GameObject* item);
+    GameObject* removeItem(int index);
 };
 
 

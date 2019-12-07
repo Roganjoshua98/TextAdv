@@ -22,10 +22,11 @@ public:
     /* Constructor and desctructor */
     GameObject(string _name, string _description, string _keyword);
     ~GameObject();
-    /* Static list of all gameObjects initiated */
-    static list<GameObject*> gameObjects;
-    //static GameObject* addObject(GameObject* room);
+    static GameObject* addItem(string _name, string _description, string _keyword);
+    static GameObject* addItem(GameObject* item);
     string getName();
     string getDescription();
     string getKeyword();
+
+    static list<GameObject *> items;
 };
