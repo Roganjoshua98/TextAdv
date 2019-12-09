@@ -64,6 +64,7 @@ public:
      */
     static Room* addRoom(const string* _name, const string* _desc);
     static Room* addRoom(Room* room);
+    static list<Room*> getRooms();
 
     vector<GameObject*> getItems() const;
     void addItem(GameObject* item);
@@ -73,10 +74,13 @@ public:
      * Like setNorth, but it also does setSouth for the room north of it
      * @param _north
      */
+
     void configNorth(Room *_north);
     void configSouth(Room *_south);
     void configEast(Room *_east);
     void configWest(Room *_west);
+
+    string getName() const;
 
     Room* getNorth() const;
     void setNorth(Room* _north);
@@ -84,7 +88,6 @@ public:
     void setSouth(Room* _south);
     Room* getEast() const;
     void setEast(Room* _east);
-
     Room* getWest() const;
     void setWest(Room* _west);
 };

@@ -29,4 +29,5 @@ public:
     string getKeyword();
 
     static list<GameObject *> items;
+    static list<GameObject*> getItemsList();
 };

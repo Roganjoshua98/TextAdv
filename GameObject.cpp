@@ -34,3 +34,7 @@ GameObject *GameObject::addItem(GameObject *item) {
 GameObject::~GameObject() {
     GameObject::items.remove(this);
 }
+
+list<GameObject*> GameObject::getItemsList() {
+    return GameObject::items;
+}

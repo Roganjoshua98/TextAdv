@@ -1,11 +1,10 @@
 
 #include <iostream>
 #include <iomanip>
-#include <memory>
-#include <iterator>
 #include <vector>
 #include <forward_list>
 #include <strings.h>
+#include <fstream>
 #include "Room.h"
 #include "wordwrap.h"
 #include "State.h"
@@ -15,7 +14,8 @@
 using std::string;
 using std::unique_ptr;
 
-int maxSize = 255;  //The maximum size of any list of items. Important for functions.
+int maxSize = 255;  //The maximum size of any list of items. Important for checkItems, get, drop and examine methods.
+string saveFileName = "savefile.txt";
 string commandBuffer;
 State *currentState;
 
@@ -33,13 +33,13 @@ void inputCommand(string *buffer) {
  * Sets up the map.
  */
 void initRooms() {
-    auto* r1 = Room::addRoom(&r1name, &r1desc);
-    auto* r2 = Room::addRoom(&r2name, &r2desc);
-    auto* r3 = Room::addRoom(&r3name, &r3desc);
-    auto* r4 = Room::addRoom(&r4name, &r4desc);
-    auto* r5 = Room::addRoom(&r5name, &r5desc);
-    auto* i1 = GameObject::addItem(i1name, i1desc, i1key);
-    auto* i2 = GameObject::addItem(i2name, i2desc, i2key);
+    Room* r1 = Room::addRoom(&r1name, &r1desc);
+    Room* r2 = Room::addRoom(&r2name, &r2desc);
+    Room* r3 = Room::addRoom(&r3name, &r3desc);
+    Room* r4 = Room::addRoom(&r4name, &r4desc);
+    Room* r5 = Room::addRoom(&r5name, &r5desc);
+    GameObject* i1 = GameObject::addItem(i1name, i1desc, i1key);
+    GameObject* i2 = GameObject::addItem(i2name, i2desc, i2key);
     r1->configSouth(r2);
     r1->configEast(r3);
     r1->configWest(r4);
@@ -53,10 +53,136 @@ void initRooms() {
  */
 void initState() {
     currentState = new State(Room::rooms.front());
+    GameObject* i3 = GameObject::addItem(i3name, i3desc, i3key);
+    GameObject* i4 = GameObject::addItem(i4name, i4desc, i4key);
+    GameObject* test = *GameObject::items.end();
+    GameObject* testicles = test;
+    currentState->addItem(i3);
+    currentState->addItem(testicles);
+}
+
+bool loadIventory(list<string> keys) {
+    try {
+        for (string key : keys) {
+            for (auto & item : GameObject::items) {
+                if (key == item->getKeyword()) {
+                    currentState->addItem(item);
+                    break;
+                }
+            }
+        }
+    } catch (exception& e) {
+        cout << "Uh oh! The save file has not been written to properly." << endl;
+        cout << "Starting new game" << endl;
+        Room::rooms.clear();
+        GameObject::items.clear();
+        initRooms();
+        initState();
+        return false;
+    }
+    return true;
+}
+
+bool loadRoom(list<string> names) {
+    bool x;
+    string roomName;
+    Room* currentRoom = nullptr;
+    for (auto & room : Room::rooms)
+        if (roomName == room->getName()) {
+            currentRoom = room;
+            break;
+        }
+    try {
+        for (string name : names) {
+            auto iter = GameObject::items.begin();
+            for (int i = 0; i < GameObject::items.size(); i++) {
+                if (name == (*iter)->getKeyword()) {
+                    currentRoom->addItem(*iter);
+                    break;
+                }
+                advance(iter, 1);
+            }
+        }
+    } catch (exception& e) {
+        cout << "Uh oh! The save file has not been written on properly." << endl;
+        Room::rooms.clear();
+        GameObject::items.clear();
+        initRooms();
+        initState();
+        return false;
+    }
+    return true;
+}
+
+void load() {
+    cout << "Loading file..." << endl;
+    /* Load all rooms and items*/
+    auto* r1 = Room::addRoom(&r1name, &r1desc);
+    auto* r2 = Room::addRoom(&r2name, &r2desc);
+    auto* r3 = Room::addRoom(&r3name, &r3desc);
+    auto* r4 = Room::addRoom(&r4name, &r4desc);
+    auto* r5 = Room::addRoom(&r5name, &r5desc);
+    r1->configSouth(r2);
+    r1->configEast(r3);
+    r1->configWest(r4);
+    r1->configNorth(r5);
+    auto* i1 = GameObject::addItem(i1name, i1desc, i1key);
+    auto* i2 = GameObject::addItem(i2name, i2desc, i2key);
     auto* i3 = GameObject::addItem(i3name, i3desc, i3key);
     auto* i4 = GameObject::addItem(i4name, i4desc, i4key);
-    currentState->addItem(i3);
-    currentState->addItem(i4);
+
+    ifstream file (saveFileName);
+    if (file.is_open()) {
+        string textLine;
+        getline(file, textLine); //First line is always the player's location, so no check needed
+        for (auto & room : Room::rooms)
+            if (textLine == room->getName()) {
+                currentState = new State(room);
+                break;
+            }
+
+        list<string> itemNames;
+        bool fileLoadedCorrectly = true;
+        while (!file.eof() && fileLoadedCorrectly) {
+            getline(file, textLine);
+
+            if (textLine == "Inventory:") {  //Between "Inventory:" and "ENDINVENTORY", all lines are item keywords
+                cout << "Loading inventory..." << endl;
+                getline(file, textLine);
+                while (textLine != "ENDINVENTORY") {
+                    itemNames.push_back(textLine);
+                    getline(file, textLine);
+                }
+                fileLoadedCorrectly = loadIventory(itemNames);
+            }
+
+            else {    //If not "Inventory:", the line will be a room name
+                cout << "Loading items for " << textLine << "..." << endl;
+                itemNames.clear();
+                getline(file, textLine);
+                while (textLine != "ENDROOM") {  //All following lines before "ENDROOM" are item keywords in the room
+                    itemNames.push_back(textLine);
+                    getline(file, textLine);
+                }
+                fileLoadedCorrectly = loadRoom(itemNames);
+            }
+
+        }
+
+        if (fileLoadedCorrectly)
+            cout << "File successfully loaded" << endl;
+        else
+            cout << "File load was unsuccessful. New game started" << endl;
+        file.close();
+    } else {
+        cout << "Unable to load file. Starting new game." << endl;
+        initRooms();
+        initState();
+    }
+}
+
+void save() {
+    cout << "Saving file..." << endl;
 }
 
 /**
@@ -229,8 +355,31 @@ void gameLoop() {
 
 int main() {
     initWordWrap();
-    initRooms();
-    initState();
+
+    string s;
+    cout << "Would you like to continue from last adventure? (y/n)" << endl;
+    cin >> s;
+    char c = s[0];
+    bool loadDone = false;
+    while (!loadDone) {
+        switch (c) {
+            case 'y' :
+                load();
+                loadDone = true;
+                break;
+            case 'n' :
+                initRooms();
+                initState();
+                loadDone = true;
+                break;
+            default:
+                cout << "Please enter 'y' for yes or 'n' for no" << endl;
+                cin >> s;
+                c = s[0];
+                break;
+        }
+    }
+
     currentState->announceLoc();
     gameLoop();
     return 0;

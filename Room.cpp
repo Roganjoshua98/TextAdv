@@ -151,5 +151,13 @@ GameObject* Room::removeItem(int index) {
     return item;
 }
 
+list<Room *> Room::getRooms() {
+    return list<Room *>();
+}
+
+string Room::getName() const {
+    return *name;
+}
+
 
 
