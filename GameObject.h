@@ -13,17 +13,16 @@ using namespace std;
 
 class GameObject {
     /* Short name for object */
-    string name;
+    const string* name;
     /* Long description of object */
-    string description;
+    const string* description;
     /* Keyword for user to refer to object in commands */
-    string keyword;
+    const string* keyword;
 public:
     /* Constructor and desctructor */
-    GameObject(string _name, string _description, string _keyword);
+    GameObject(const string* _name, const string* _description, const string* _keyword);
     ~GameObject();
-    static GameObject* addItem(string _name, string _description, string _keyword);
-    static GameObject* addItem(GameObject* item);
+    static GameObject* addItem(const string* _name, const string* _description, const string* _keyword);
     string getName();
     string getDescription();
     string getKeyword();

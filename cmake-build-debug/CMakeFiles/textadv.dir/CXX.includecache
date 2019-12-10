@@ -6,32 +6,12 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/joshu/CLionProjects/textadv/GameObject.cpp
-GameObject.h
-C:/Users/joshu/CLionProjects/textadv/GameObject.h
-wordwrap.h
-C:/Users/joshu/CLionProjects/textadv/wordwrap.h
-
 C:/Users/joshu/CLionProjects/textadv/GameObject.h
 string
 -
 forward_list
 -
 list
--
-
-C:/Users/joshu/CLionProjects/textadv/Room.cpp
-Room.h
-C:/Users/joshu/CLionProjects/textadv/Room.h
-wordwrap.h
-C:/Users/joshu/CLionProjects/textadv/wordwrap.h
-strings.h
-C:/Users/joshu/CLionProjects/textadv/strings.h
-algorithm
--
-iostream
--
-vector
 -
 
 C:/Users/joshu/CLionProjects/textadv/Room.h
@@ -45,12 +25,6 @@ vector
 -
 GameObject.h
 C:/Users/joshu/CLionProjects/textadv/GameObject.h
-
-C:/Users/joshu/CLionProjects/textadv/State.cpp
-State.h
-C:/Users/joshu/CLionProjects/textadv/State.h
-list
--
 
 C:/Users/joshu/CLionProjects/textadv/State.h
 Room.h
@@ -77,10 +51,6 @@ State.h
 C:/Users/joshu/CLionProjects/textadv/State.h
 strings.h
 C:/Users/joshu/CLionProjects/textadv/strings.h
-
-C:/Users/joshu/CLionProjects/textadv/strings.h
-string
--
 
 C:/Users/joshu/CLionProjects/textadv/wordwrap.h
 string
