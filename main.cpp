@@ -3,7 +3,6 @@
 #include <iomanip>
 #include <vector>
 #include <forward_list>
-#include <strings.h>
 #include <fstream>
 #include "Room.h"
 #include "wordwrap.h"
@@ -15,7 +14,7 @@ using std::string;
 using std::unique_ptr;
 
 const int maxSize = 255;  //The maximum size of any list of items. Important for checkItems, get, drop and examine methods.
-const string saveFileName = "savefile.txt";
+const string saveFileName = "savefile.txt"; //Name of save file, stored as variable in case the name is ever changed
 string commandBuffer;
 State *currentState;
 
@@ -61,14 +60,12 @@ void initState() {
 
 bool loadIventory(list<string> keys) {
     try {
-        for (string key : keys) {
-            for (auto & item : GameObject::items) {
+        for (string key : keys)
+            for (auto & item : GameObject::items)
                 if (key == item->getKeyword()) {
                     currentState->addItem(item);
                     break;
                 }
-            }
-        }
     } catch (exception& e) {
         cout << "Uh oh! The save file has not been written to properly." << endl;
         cout << "Starting new game" << endl;
@@ -338,6 +335,13 @@ void gameLoop() {
                 commandOk = true;
                 gameOver = true;
             }
+
+            /* If player enters blank command, treat as an unintended input rather than a bad command*/
+            else if (((commandBuffer.compare(0, endOfVerb, "") == 0))) {
+                commandOk = true;
+                cout<<endl;
+            }
+
         } else {    //Two word input
             string searchItem = commandBuffer.substr(endOfVerb + 1);    //Item that player wants action to be done on
             /*
