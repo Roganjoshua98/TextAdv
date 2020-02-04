@@ -1,5 +1,5 @@
 //
-// Created by joshua on 05/11/2019.
+// Created by Joshua Reyes-Traverso.
 //
 
 #ifndef TEXTADV_GAMEOBJECT_H

@@ -1,3 +1,6 @@
+//
+// Created by Joshua Reyes-Traverso.
+//
 
 #include <iostream>
 #include <iomanip>
@@ -95,6 +98,7 @@ bool loadRoom(string roomName, list<string> names) {
         }
     } catch (exception& e) {
         cout << "Uh oh! The save file has not been written on properly." << endl;
+        cout << "Starting new game" << endl;
         return false;
     }
     return true;

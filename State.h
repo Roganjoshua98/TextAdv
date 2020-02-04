@@ -1,5 +1,5 @@
 //
-// Created by DrMark on 10/2/2017.
+// Created by Joshua Reyes-Traverso.
 //
 
 #ifndef TEXTADV_STATE_H

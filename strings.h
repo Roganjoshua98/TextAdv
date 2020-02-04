@@ -1,5 +1,5 @@
 //
-// Created by DrMark on 10/4/2017.
+// Created by Joshua Reyes-Traverso.
 //
 
 #ifndef TEXTADV_STRINGS_H
@@ -41,7 +41,7 @@ const string i4key = "pot";
 /**
  * ERRORS - Error messages
  */
-const string badExit = "You bump into a wall and briefly question your sniaty";
+const string badExit = "You bump into a wall and briefly question your sanity";
 const string badCommand = "I don't understand that.";
 
 

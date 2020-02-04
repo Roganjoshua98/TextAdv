@@ -1,5 +1,5 @@
 //
-// Created by joshua on 05/11/2019.
+// Created by Joshua Reyes-Traverso.
 //
 #include "GameObject.h"
 #include "wordwrap.h"

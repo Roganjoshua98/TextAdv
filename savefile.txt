@@ -1,0 +1,17 @@
+South Room
+Inventory:
+sword
+smash
+ENDINVENTORY
+North Room
+ENDROOM
+South Room
+will
+ENDROOM
+East Room
+ENDROOM
+The West Room
+ENDROOM
+Centre Room
+pot
+ENDROOM

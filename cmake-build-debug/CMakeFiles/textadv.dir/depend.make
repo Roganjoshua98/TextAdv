@@ -20,6 +20,7 @@ CMakeFiles/textadv.dir/main.cpp.obj: ../GameObject.h
 CMakeFiles/textadv.dir/main.cpp.obj: ../Room.h
 CMakeFiles/textadv.dir/main.cpp.obj: ../State.h
 CMakeFiles/textadv.dir/main.cpp.obj: ../main.cpp
+CMakeFiles/textadv.dir/main.cpp.obj: ../strings.h
 CMakeFiles/textadv.dir/main.cpp.obj: ../wordwrap.h
 
 CMakeFiles/textadv.dir/wordwrap.cpp.obj: ../wordwrap.cpp
